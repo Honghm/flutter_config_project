@@ -1,20 +1,27 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'app.dart';
-import 'common/constants/general.dart';
+import 'package:template_flutter/widgets/home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Provider.debugCheckInvalidValueType = null;
-  printLog('[main] ============== main.dart START ==============');
 
-  /// enable network traffic logging
-  HttpClient.enableTimelineLogging = false;
-  runZoned(() {
-    runApp(App());
-  });
+  runApp(App());
+}
+
+class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
+  }
 }
