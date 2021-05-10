@@ -1,5 +1,4 @@
 
-import 'package:flutter/material.dart';
 import 'package:template_flutter/generated/i10n.dart';
 
 class Utils {

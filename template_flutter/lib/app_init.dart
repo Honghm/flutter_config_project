@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +14,7 @@ import 'package:template_flutter/views/splash_screen.dart';
 
 import 'common/config.dart';
 import 'common/constants/general.dart';
+import 'main.dart';
 import 'view_models/app_model.dart';
 
 class AppInit extends StatefulWidget {
@@ -22,7 +26,17 @@ class AppInit extends StatefulWidget {
 
 class _AppInitState extends State<AppInit> with AfterLayoutMixin {
   final StreamController<bool> _streamInit = StreamController<bool>();
-
+  late String token;
+  List subscribed = [];
+  List topics = [
+    'Samsung',
+    'Apple',
+    'Huawei',
+    'Nokia',
+    'Sony',
+    'HTC',
+    'Lenovo'
+  ];
   bool isFirstSeen = true;
   bool isLoggedIn = false;
 
@@ -62,7 +76,6 @@ class _AppInitState extends State<AppInit> with AfterLayoutMixin {
     }
   }
 
-
   @override
   void initState() {
     loadInitData();
@@ -80,10 +93,6 @@ class _AppInitState extends State<AppInit> with AfterLayoutMixin {
     return StreamBuilder<bool>(
         stream: _streamInit.stream,
         builder: (context, snapshot) {
-          print(snapshot.data);
-          // if(!snapshot.data!){
-          //   return HomeScreen();
-          // }
           return SplashScreen();
         });
   }
