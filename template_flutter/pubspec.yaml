@@ -37,6 +37,13 @@ dependencies:
   after_layout: ^1.1.0
   shared_preferences: ^2.0.5
 
+  flutter_template:
+    git:
+      url: https://github.com/Honghm/flutter_template.git
+  grouped_list: ^4.0.0
+  table_calendar: ^3.0.0
+  flutter_calendar_carousel: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

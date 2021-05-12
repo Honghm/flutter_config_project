@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
-import 'package:template_flutter/widgets/button/example.dart';
-import 'package:template_flutter/widgets/button/progress_state_button/ex_progress_button.dart';
-import 'package:template_flutter/widgets/button/progress_button_animation.dart';
-
+import 'package:template_flutter/widgets/bottom_bar_navigation/bottom_bar.dart';
+import 'package:template_flutter/widgets/button/dropdown_button/dropdown_button.dart';
+import 'package:template_flutter/widgets/calendar/calendar.dart';
+import 'package:template_flutter/widgets/listview/grouplist.dart';
+import 'package:template_flutter/widgets/pin_code/ex_pin_code.dart';
+import 'package:template_flutter/widgets/textfield/ex_textfield.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -11,29 +12,11 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
-      body: Center(
-        child: ExProgressButtonAnimation(),
-      ),
+      body: Calendar(),
     );
   }
 }
