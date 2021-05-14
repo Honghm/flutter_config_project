@@ -1,21 +1,14 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:template_flutter/services/services_api.dart';
-import 'package:template_flutter/views/home_screen.dart';
 import 'package:template_flutter/views/splash_screen.dart';
 
 import 'common/config.dart';
 import 'common/constants/general.dart';
-import 'main.dart';
-import 'view_models/app_model.dart';
 
 class AppInit extends StatefulWidget {
   const AppInit({Key? key}) : super(key: key);
