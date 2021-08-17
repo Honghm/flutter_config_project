@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:template_flutter/views/home_screen.dart';
+import 'package:template_flutter/views/map/map_screen.dart';
+import 'package:template_flutter/views/notification/notification_screen.dart';
+import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
 
 import 'common/constants/routes.dart';
 
@@ -10,16 +13,16 @@ class Routes {
       _routeGenerate(settings);
 
   static final Map<String, WidgetBuilder> _routes = {
-    "/home": (context) => HomeScreen(),
+    HomeScreen.id: (context) => HomeScreen(),
+    NotificationScreen.id: (context) => NotificationScreen(),
+    MapScreen.id: (context) => MapScreen(),
+    ProgressStateButtonScreen.id: (context) => ProgressStateButtonScreen(),
   };
 
   static Route _routeGenerate(RouteSettings settings) {
     switch (settings.name) {
       case RouteList.home:
-        return _buildRouteFade(
-          settings,
-         HomeScreen()
-        );
+        return _buildRouteFade(settings, HomeScreen());
       default:
         return _errorRoute();
     }

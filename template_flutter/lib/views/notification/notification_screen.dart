@@ -5,6 +5,7 @@ import 'package:template_flutter/services/services_api.dart';
 import 'package:template_flutter/views/map/real_time_map.dart';
 
 class NotificationScreen extends StatefulWidget {
+  static final id = '/notification';
   const NotificationScreen({Key? key}) : super(key: key);
 
   @override
@@ -32,12 +33,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: Text("Send notification"),
               ),
             ),
-            Expanded(
-              child: RealTimeMap(
-                  mapType: MapType.normal,
-                  onMapCreated: (controller) {},
-                  onLocationChanged: (location) {}),
-            )
           ],
         ),
       ),

@@ -5,12 +5,27 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:template_flutter/common/utils/tools.dart';
 
+///Google map với chức năng tracking vị trí liên tục.
+///
+/// [RealTimeMap.mapType] : loại map, chi tiết => [MapType].
+///
+/// [RealTimeMap.onMapCreated] : callback được gọi khi map đã khởi tạo xong,
+/// tham số [GoogleMapController] dùng để điều khiển map.
+///
+/// [RealTimeMap.zoom] mức độ zoom của map, mặc định là 24.
+///
+/// [RealTimeMap.onLocationChanged] callback được gọi mỗi [RealTimeMap.listenInterval]
+/// trôi qua với tham số [Position] là vị trí mới.
+///
+/// [RealTimeMap.listenInterval] khoảng thời gian giữa mỗi
+/// lần gọi [RealTimeMap.onLocationChanged].
 class RealTimeMap extends StatefulWidget {
   final MapType mapType;
   final void Function(GoogleMapController controller) onMapCreated;
   final double zoom;
   final Duration listenInterval;
   final void Function(Position newLocation) onLocationChanged;
+
   const RealTimeMap(
       {Key? key,
       required this.mapType,
@@ -62,7 +77,7 @@ class _RealTimeMapState extends State<RealTimeMap> {
           } else
             return CircularProgressIndicator();
         }
-        return Container();
+        return CircularProgressIndicator();
       },
       future: firstLocation,
     );
@@ -78,10 +93,12 @@ class _RealTimeMapState extends State<RealTimeMap> {
     );
   }
 
+  ///Bắt đầu tracking
   void startTracking() async {
+    ///cancel locationSubscription để tránh listen trùng lặp
     if (locationSubscription != null) locationSubscription!.cancel();
+
     locationSubscription = Geolocator.getPositionStream(
-      desiredAccuracy: LocationAccuracy.bestForNavigation,
       intervalDuration: widget.listenInterval,
     ).listen(
       (newLocationData) {
