@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:template_flutter/common/tools.dart';
+import 'package:template_flutter/common/utils/tools.dart';
 import 'package:template_flutter/generated/i10n.dart';
 import 'package:template_flutter/view_models/app_model.dart';
 
@@ -15,7 +15,7 @@ class _LanguageState extends State<Language> {
   void _showLoading(String language) {
     final snackBar = SnackBar(
       content: Text(
-       S.of(context)!.languageSuccess,
+        S.of(context)!.languageSuccess,
         style: const TextStyle(
           fontSize: 15,
         ),
@@ -42,7 +42,8 @@ class _LanguageState extends State<Language> {
           child: ListTile(
             title: Text(languages[i]["name"]),
             onTap: () {
-              Provider.of<AppModel>(context, listen: false).changeLanguage(languages[i]["code"], context);
+              Provider.of<AppModel>(context, listen: false)
+                  .changeLanguage(languages[i]["code"], context);
               _showLoading(languages[i]["text"]);
             },
           ),

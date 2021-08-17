@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:template_flutter/common/utils/tools.dart';
 import 'package:template_flutter/services/services_api.dart';
+import 'package:template_flutter/views/map/real_time_map.dart';
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
@@ -17,7 +21,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           children: [
             Text("Firebase Cloud Messaging"),
             InkWell(
-              onTap: (){
+              onTap: () async {
                 APIServices().sendNotification();
               },
               child: Container(
@@ -27,6 +31,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 alignment: Alignment.center,
                 child: Text("Send notification"),
               ),
+            ),
+            Expanded(
+              child: RealTimeMap(
+                  mapType: MapType.normal,
+                  onMapCreated: (controller) {},
+                  onLocationChanged: (location) {}),
             )
           ],
         ),
@@ -34,4 +44,3 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 }
-
