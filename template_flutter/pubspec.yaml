@@ -46,7 +46,6 @@ dependencies:
   geolocator: ^7.4.0
   progress_state_button: ^1.0.3
   carousel_slider: ^4.0.0
-  smart_select: ^4.3.2
 
 dev_dependencies:
   flutter_test:

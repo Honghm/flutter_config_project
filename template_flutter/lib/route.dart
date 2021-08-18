@@ -7,6 +7,7 @@ import 'package:template_flutter/views/notification/notification_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
 
 import 'common/constants/routes.dart';
+import 'views/checkbox/multi_checkbox_screen.dart';
 
 class Routes {
   static Map<String, WidgetBuilder> getAll() => _routes;
@@ -21,6 +22,7 @@ class Routes {
     ProgressStateButtonScreen.id: (context) => ProgressStateButtonScreen(),
     GalleryViewScreen.id: (context) => GalleryViewScreen(),
     ImageSlider.id: (context) => ImageSlider(),
+    MultiCheckboxScreen.id: (context) => MultiCheckboxScreen(),
   };
 
   static Route _routeGenerate(RouteSettings settings) {

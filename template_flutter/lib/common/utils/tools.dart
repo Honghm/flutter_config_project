@@ -26,8 +26,9 @@ class Utils {
 
   ///Chọn 1 hoặc nhiều ảnh từ Gallery
   ///
-  ///[themeColor] : primaryColor trong theme của [AssetPicker]
-  ///[success] : callback được gọi khi người dùng chọn xong hình
+  ///* [themeColor] : primaryColor trong theme của [AssetPicker].
+  ///* [success] : callback được gọi khi người dùng chọn xong hình với tham số
+  ///là List<String> - đường dẫn tuyệt đối của các hình.
   static Future pickImageFromGallery(
     BuildContext context, {
     Color themeColor = Colors.blue,
@@ -52,12 +53,12 @@ class Utils {
 
   ///Mở gallery view
   ///
-  ///[index] là index của ảnh được hiển thị lên đầu tiên khi mở gallery view
-  ///[images] list ảnh muốn hiển thị
-  ///[imagePaths] list đường dẫn tuyệt đối của ảnh trong [images]
-  ///[onImageDeleted]hàm callback được gọi khi có ảnh bị xóa
-  ///[newImagePaths] list đường dẫn tuyệt đối của ảnh trong [newImages]
-  ///sau khi đã xóa ảnh
+  ///* [index], index của ảnh được hiển thị lên đầu tiên khi mở gallery view.
+  ///* [images], list ảnh muốn hiển thị.
+  ///* [imagePaths], list đường dẫn tuyệt đối của ảnh trong [images].
+  ///* [onImageDeleted], hàm callback được gọi khi có ảnh bị xóa.
+  ///* [newImagePaths], list đường dẫn tuyệt đối của ảnh trong [newImages]
+  ///sau khi đã xóa ảnh.
   static void openPhotoViewer(
     BuildContext context, {
     required int index,

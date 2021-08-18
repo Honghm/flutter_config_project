@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template_flutter/view_models/notification/firebase_notification_handler.dart';
+import 'package:template_flutter/views/checkbox/multi_checkbox_screen.dart';
 import 'package:template_flutter/views/map/map_screen.dart';
 import 'package:template_flutter/views/notification/notification_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
@@ -64,6 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pushNamed(context, ImageSlider.id);
                 },
                 child: Text("Image Slider Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, MultiCheckboxScreen.id);
+                },
+                child: Text("MultiCheckbox Screen")),
           ],
         ),
       ),
