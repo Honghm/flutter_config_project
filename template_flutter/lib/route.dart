@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:template_flutter/views/gallery_view/gallery_view_screen.dart';
 import 'package:template_flutter/views/home_screen.dart';
+import 'package:template_flutter/views/image_slider/image_slider.dart';
 import 'package:template_flutter/views/map/map_screen.dart';
 import 'package:template_flutter/views/notification/notification_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
@@ -17,6 +19,8 @@ class Routes {
     NotificationScreen.id: (context) => NotificationScreen(),
     MapScreen.id: (context) => MapScreen(),
     ProgressStateButtonScreen.id: (context) => ProgressStateButtonScreen(),
+    GalleryViewScreen.id: (context) => GalleryViewScreen(),
+    ImageSlider.id: (context) => ImageSlider(),
   };
 
   static Route _routeGenerate(RouteSettings settings) {

@@ -99,7 +99,7 @@ class _PhotoViewerState extends State<PhotoViewer> {
                         Text(
                           '   Xóa',
                           style: TextStyle(
-                              fontSize: ScreenUtil().setSp(16),
+                              fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color: Colors.white,
                               fontFamily: "Roboto"),
