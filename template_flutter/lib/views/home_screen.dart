@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:template_flutter/view_models/notification/firebase_notification_handler.dart';
 import 'package:template_flutter/views/checkbox/multi_checkbox_screen.dart';
 import 'package:template_flutter/views/map/map_screen.dart';
 import 'package:template_flutter/views/notification/notification_screen.dart';
+import 'package:template_flutter/views/pin_code/pin_code_dialog.dart';
+import 'package:template_flutter/views/pin_code/pin_code_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
 
 import 'gallery_view/gallery_view_screen.dart';
@@ -70,9 +74,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pushNamed(context, MultiCheckboxScreen.id);
                 },
                 child: Text("MultiCheckbox Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, PinCodeScreen.id);
+                },
+                child: Text("PinCode Screen")),
+            ElevatedButton(
+                onPressed: () async => await _openPinCodeDialog(),
+                child: Text("Open PinCode Dialog")),
           ],
         ),
       ),
     );
+  }
+
+  Future _openPinCodeDialog() async {
+    await showDialog(
+        context: context,
+        builder: (context) => PinCodeDialog(
+              title: "Pickup confirmation",
+              subtitle: "(Oder ID: AA15)",
+              description:
+                  "Ask restaurant staff for TAC to complete your pickup",
+              pinCodeTextChanged: (val) {},
+            ));
   }
 }

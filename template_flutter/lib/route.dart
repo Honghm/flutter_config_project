@@ -8,6 +8,7 @@ import 'package:template_flutter/views/progress_state_button/progress_state_butt
 
 import 'common/constants/routes.dart';
 import 'views/checkbox/multi_checkbox_screen.dart';
+import 'views/pin_code/pin_code_screen.dart';
 
 class Routes {
   static Map<String, WidgetBuilder> getAll() => _routes;
@@ -23,6 +24,7 @@ class Routes {
     GalleryViewScreen.id: (context) => GalleryViewScreen(),
     ImageSlider.id: (context) => ImageSlider(),
     MultiCheckboxScreen.id: (context) => MultiCheckboxScreen(),
+    PinCodeScreen.id: (context) => PinCodeScreen(),
   };
 
   static Route _routeGenerate(RouteSettings settings) {

@@ -46,6 +46,7 @@ dependencies:
   geolocator: ^7.4.0
   progress_state_button: ^1.0.3
   carousel_slider: ^4.0.0
+  pin_code_fields: ^7.3.0
 
 dev_dependencies:
   flutter_test:
