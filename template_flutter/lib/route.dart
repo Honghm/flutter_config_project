@@ -5,6 +5,7 @@ import 'package:template_flutter/views/image_slider/image_slider.dart';
 import 'package:template_flutter/views/map/map_screen.dart';
 import 'package:template_flutter/views/notification/notification_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
+import 'package:template_flutter/views/radio%20group/radio_group_demo_screen.dart';
 
 import 'common/constants/routes.dart';
 import 'views/checkbox/multi_checkbox_screen.dart';
@@ -25,6 +26,7 @@ class Routes {
     ImageSlider.id: (context) => ImageSlider(),
     MultiCheckboxScreen.id: (context) => MultiCheckboxScreen(),
     PinCodeScreen.id: (context) => PinCodeScreen(),
+    RadioGroupDemoScreen.id: (context) => RadioGroupDemoScreen(),
   };
 
   static Route _routeGenerate(RouteSettings settings) {
