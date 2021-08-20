@@ -7,7 +7,7 @@ class RadioGroup extends StatefulWidget {
   ///
   /// * [items], List<String> chứa title cho mỗi item.
   /// * [onCheckChanged], callback được gọi khi một checkbox thay đổi trạng thái,
-  /// với tham số là List<String> chứa title các item được check.
+  /// với tham số là String chứa title item được check.
   /// * [scrollDirection], chiều scroll của [GridView], mặc định là [Axis.vertical].
   /// * [crossAxisCount], số cột của [GridView] nếu chiều scroll là [Axis.vertical]
   /// số dòng của [GridView] nếu chiều scroll là [Axis.horizontal]. Gán = 1 thì sẽ thành [ListView].

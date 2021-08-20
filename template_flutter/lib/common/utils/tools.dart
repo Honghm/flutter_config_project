@@ -88,6 +88,8 @@ class Utils {
     );
   }
 
+  ///Mở preview của các hình đã chụp khi chụp nhiều hình
+  ///qua hàm [pickMultipleImagesFromCamera]
   static Future openCameraPhotoPreview(
     BuildContext context, {
     required int index,
@@ -110,6 +112,7 @@ class Utils {
     );
   }
 
+  ///Chụp 1 hình từ camera
   static void pickSingleImageFromCamera(BuildContext context,
       {required void Function(String path) onPicked}) {
     Navigator.push(
@@ -126,6 +129,7 @@ class Utils {
     );
   }
 
+  ///Chụp nhiều hình từ camera
   static void pickMultipleImagesFromCamera(BuildContext context,
       {required void Function(List<String> paths) onPicked}) {
     Navigator.push(
