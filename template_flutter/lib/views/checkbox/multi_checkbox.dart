@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template_flutter/views/checkbox/custom_checkbox.dart';
 
 class MultiCheckbox extends StatefulWidget {
   ///Widget chứa 1 hoặc nhiều checkbox, các checkbox được wrap trong [GridView]
@@ -14,12 +15,14 @@ class MultiCheckbox extends StatefulWidget {
   /// * [unCheckedBorderColor], màu viền của checkbox khi nó không được check,
   /// mặc định là [Colors.grey].
   /// * [haveCheckIcon], true nếu muốn hiển thị check icon, mặc định là true.
-  /// * [checkIconColor], màu của check icon, thuộc tính này được bỏ qua nếu
-  /// [haveCheckIcon] = false, mặc định là [Colors.white].
-  /// * [shape], hình dạng của checkbox, mặc định là [RoundedRectangleBorder]
-  /// với cornerRadius là 1.0.
+  /// * [icon], icon của checkbox
+  /// * [shape], hình dạng của checkbox, mặc định là [BoxShape.rectangle].
   /// * [titleMaxLines], số dòng tối đa của title, mặc định là 2.
-  ///
+  /// * [margin], margin của checkbox, mặc định là EdgeInsets.all(4).
+  /// * [padding], padding của checkbox, mặc định là EdgeInsets.zero.
+  /// * [size], size của checkbox, mặc định là 24.
+  /// * [borderRadius], borderRadius của checkbox, mặc định là 4, property này được
+  /// bỏ qua nếu [shape] là [BoxShape.circle].
   MultiCheckbox({
     Key? key,
     required this.items,
@@ -29,19 +32,23 @@ class MultiCheckbox extends StatefulWidget {
     this.checkedFillColor = Colors.blue,
     this.unCheckedBorderColor = Colors.grey,
     this.haveCheckIcon = true,
-    this.checkIconColor = Colors.white,
-    this.shape,
+    this.icon,
+    this.shape = BoxShape.rectangle,
     this.titleMaxLines = 2,
     this.mainAxisExtent = 50,
     this.mainAxisSpacing = 10,
     this.crossAxisSpacing = 5,
+    this.margin = const EdgeInsets.all(4),
+    this.padding = const EdgeInsets.all(4),
+    this.size = 24,
+    this.borderRadius,
   }) : super(key: key);
   final List<String> items;
   final Color checkedFillColor;
   final Color unCheckedBorderColor;
-  final Color checkIconColor;
+  final Widget? icon;
   final bool haveCheckIcon;
-  final OutlinedBorder? shape;
+  final BoxShape shape;
   final int titleMaxLines;
   final void Function(List<String> selectedItems) onCheckChanged;
   final int crossAxisCount;
@@ -49,6 +56,10 @@ class MultiCheckbox extends StatefulWidget {
   final double mainAxisSpacing;
   final double crossAxisSpacing;
   final Axis scrollDirection;
+  final EdgeInsets margin;
+  final EdgeInsets padding;
+  final double size;
+  final BorderRadius? borderRadius;
   @override
   _MultiCheckboxState createState() => _MultiCheckboxState();
 }
@@ -89,23 +100,27 @@ class _MultiCheckboxState extends State<MultiCheckbox> {
           data: Theme.of(context).copyWith(
             unselectedWidgetColor: widget.unCheckedBorderColor,
           ),
-          child: Checkbox(
-              shape: widget.shape,
-              activeColor: widget.checkedFillColor,
-              checkColor: widget.haveCheckIcon
-                  ? widget.checkIconColor
-                  : widget.checkedFillColor,
-              visualDensity: VisualDensity.compact,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              value: checkBox.value,
-              onChanged: (value) => setState(() {
-                    checkBox.value = value!;
-                    final selectedItems = items
-                        .where((element) => element.value == true)
-                        .map((e) => e.title)
-                        .toList();
-                    widget.onCheckChanged(selectedItems);
-                  })),
+          child: CustomCheckbox(
+            margin: widget.margin,
+            padding: widget.padding,
+            unCheckedBorderColor: widget.unCheckedBorderColor,
+            checkedFillColor: widget.checkedFillColor,
+            size: widget.size,
+            shape: widget.shape,
+            isChecked: checkBox.value,
+            icon: widget.haveCheckIcon ? widget.icon : SizedBox(),
+            borderRadius: widget.borderRadius,
+            onChanged: (value) => setState(
+              () {
+                checkBox.value = value;
+                final selectedItems = items
+                    .where((element) => element.value == true)
+                    .map((e) => e.title)
+                    .toList();
+                widget.onCheckChanged(selectedItems);
+              },
+            ),
+          ),
         ),
         Expanded(
           child: Text(

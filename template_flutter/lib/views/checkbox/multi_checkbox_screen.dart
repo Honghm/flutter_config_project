@@ -20,14 +20,16 @@ class MultiCheckboxScreen extends StatelessWidget {
           items: items,
           checkedFillColor: Colors.red,
           haveCheckIcon: true,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          checkIconColor: Colors.white,
-          titleMaxLines: 1,
+          shape: BoxShape.rectangle,
+          icon: FlutterLogo(),
+          titleMaxLines: 2,
           unCheckedBorderColor: Colors.yellow,
           onCheckChanged: (result) {
             print(result.length);
           },
-          crossAxisCount: 4,
+          crossAxisCount: 3,
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
     );

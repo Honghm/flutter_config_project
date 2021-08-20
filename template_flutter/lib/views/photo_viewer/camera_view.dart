@@ -169,7 +169,7 @@ class SinglePhotoPreview extends StatelessWidget {
                 child: IconButton(
                   onPressed: () => Navigator.pop(context, false),
                   icon: Icon(
-                    Icons.cancel,
+                    Icons.clear,
                     color: Colors.white,
                   ),
                   iconSize: 30,

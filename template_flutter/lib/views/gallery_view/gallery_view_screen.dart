@@ -55,6 +55,19 @@ class _GalleryViewScreenState extends State<GalleryViewScreen> {
           Spacer(),
           ElevatedButton(
               onPressed: () async {
+                await Utils.pickImageFromGallery(context, maxAssets: 1,
+                    success: (paths) {
+                  setState(() {
+                    imagePaths.addAll(paths);
+                    paths.forEach((element) {
+                      images.add(_buildImage(element));
+                    });
+                  });
+                });
+              },
+              child: Text("Pick single image from gallery")),
+          ElevatedButton(
+              onPressed: () async {
                 await Utils.pickImageFromGallery(context, success: (paths) {
                   setState(() {
                     imagePaths.addAll(paths);
@@ -64,7 +77,7 @@ class _GalleryViewScreenState extends State<GalleryViewScreen> {
                   });
                 });
               },
-              child: Text("Open photo picker")),
+              child: Text("Pick multiple images from gallery")),
           ElevatedButton(
               onPressed: () => Utils.pickMultipleImagesFromCamera(
                     context,
