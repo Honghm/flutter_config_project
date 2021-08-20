@@ -44,6 +44,7 @@ class Utils {
       context,
       textDelegate: VietnameseTextDelegate(),
       maxAssets: maxAssets,
+      specialPickerType: maxAssets == 1 ? SpecialPickerType.noPreview : null,
       themeColor: themeColor,
     );
     if (images != null) {
