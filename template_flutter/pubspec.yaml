@@ -47,6 +47,7 @@ dependencies:
   progress_state_button: ^1.0.3
   carousel_slider: ^4.0.0
   pin_code_fields: ^7.3.0
+  camera: ^0.8.1+7
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:template_flutter/common/utils/tools.dart';
+import 'package:template_flutter/views/photo_viewer/camera_view.dart';
 
 class ImageModel {
   String path;
@@ -63,6 +65,28 @@ class _GalleryViewScreenState extends State<GalleryViewScreen> {
                 });
               },
               child: Text("Open photo picker")),
+          ElevatedButton(
+              onPressed: () => Utils.pickMultipleImagesFromCamera(
+                    context,
+                    onPicked: (paths) {
+                      setState(() {
+                        imagePaths.addAll(paths);
+                        images.addAll(paths.map(_buildImage));
+                      });
+                    },
+                  ),
+              child: Text("Pick multiple images from camera")),
+          ElevatedButton(
+              onPressed: () => Utils.pickSingleImageFromCamera(
+                    context,
+                    onPicked: (path) {
+                      setState(() {
+                        imagePaths.add(path);
+                        images.add(_buildImage(path));
+                      });
+                    },
+                  ),
+              child: Text("Pick single image from camera")),
           Spacer(),
           Container(
             height: 150,

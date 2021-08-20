@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:template_flutter/generated/i10n.dart';
+import 'package:template_flutter/views/photo_viewer/camera_photos_preview.dart';
+import 'package:template_flutter/views/photo_viewer/camera_view.dart';
 import 'package:template_flutter/views/photo_viewer/photo_viewer.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -79,6 +83,60 @@ class Utils {
           imagePaths: imagePaths,
           images: images,
           onImageDeleted: onImageDeleted,
+        ),
+      ),
+    );
+  }
+
+  static Future openCameraPhotoPreview(
+    BuildContext context, {
+    required int index,
+    required List<File> files,
+    required void Function(List<File> files) onImageDeleted,
+  }) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CameraPhotosPreview(
+          backgroundDecoration: const BoxDecoration(
+            color: Colors.black,
+          ),
+          initialIndex: index,
+          scrollDirection: Axis.horizontal,
+          files: files,
+          onImageDeleted: onImageDeleted,
+        ),
+      ),
+    );
+  }
+
+  static void pickSingleImageFromCamera(BuildContext context,
+      {required void Function(String path) onPicked}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CameraView(
+          isSinglePhoto: true,
+          onResult: (res) {
+            final String result = res;
+            onPicked(result);
+          },
+        ),
+      ),
+    );
+  }
+
+  static void pickMultipleImagesFromCamera(BuildContext context,
+      {required void Function(List<String> paths) onPicked}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CameraView(
+          isSinglePhoto: false,
+          onResult: (res) {
+            final List<String> result = res;
+            onPicked(result);
+          },
         ),
       ),
     );
