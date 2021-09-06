@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:template_flutter/view_models/notification/firebase_notification_handler.dart';
 import 'package:template_flutter/views/checkbox/multi_checkbox_screen.dart';
+import 'package:template_flutter/views/language/change_language.dart';
 import 'package:template_flutter/views/map/map_screen.dart';
 import 'package:template_flutter/views/notification/notification_screen.dart';
 import 'package:template_flutter/views/pin_code/pin_code_dialog.dart';
 import 'package:template_flutter/views/pin_code/pin_code_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
 import 'package:template_flutter/views/radio%20group/radio_group_demo_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:template_flutter/views/theme/change_theme.dart';
 
 import 'gallery_view/gallery_view_screen.dart';
 import 'image_slider/image_slider.dart';
@@ -44,59 +47,83 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.fromLTRB(40, 40, 40, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, NotificationScreen.id);
-                  },
-                  child: Text("Notification Screen")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, GalleryViewScreen.id);
-                  },
-                  child: Text("Gallery Screen")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, MapScreen.id);
-                  },
-                  child: Text("Real Time Map Screen")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, ProgressStateButtonScreen.id);
-                  },
-                  child: Text("Progress State Button Screen")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, ImageSlider.id);
-                  },
-                  child: Text("Image Slider Screen")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, MultiCheckboxScreen.id);
-                  },
-                  child: Text("MultiCheckbox Screen")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, RadioGroupDemoScreen.id);
-                  },
-                  child: Text("Radio Group Screen")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, PinCodeScreen.id);
-                  },
-                  child: Text("PinCode Screen")),
-              ElevatedButton(
-                  onPressed: () async => await _openPinCodeDialog(),
-                  child: Text("Open PinCode Dialog")),
+              DemoCategory(),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Future _openPinCodeDialog() async {
+class DemoCategory extends StatelessWidget {
+  const DemoCategory({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, NotificationScreen.id);
+            },
+            child: Text(AppLocalizations.of(context)!.notificationScreen)),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, GalleryViewScreen.id);
+            },
+            child: Text("Gallery Screen")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, MapScreen.id);
+            },
+            child: Text("Real Time Map Screen")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ProgressStateButtonScreen.id);
+            },
+            child: Text("Progress State Button Screen")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ImageSlider.id);
+            },
+            child: Text("Image Slider Screen")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, MultiCheckboxScreen.id);
+            },
+            child: Text("MultiCheckbox Screen")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, RadioGroupDemoScreen.id);
+            },
+            child: Text("Radio Group Screen")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, PinCodeScreen.id);
+            },
+            child: Text("PinCode Screen")),
+        ElevatedButton(
+            onPressed: () async => await _openPinCodeDialog(context),
+            child: Text("Open PinCode Dialog")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ChangeTheme.id);
+            },
+            child: Text("Change Theme")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, ChangeLanguage.id);
+            },
+            child: Text("Change Language")),
+      ],
+    );
+  }
+
+  Future _openPinCodeDialog(BuildContext context) async {
     await showDialog(
         context: context,
         builder: (context) => PinCodeDialog(

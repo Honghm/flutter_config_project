@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:template_flutter/common/utils/tools.dart';
 import 'package:template_flutter/generated/i10n.dart';
 import 'package:template_flutter/view_models/app_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Language extends StatefulWidget {
   @override
@@ -83,8 +84,93 @@ class _LanguageState extends State<Language> {
           children: [
             ...list,
             const SizedBox(height: 100),
+            MessageWithParameters(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessageWithParameters extends StatefulWidget {
+  const MessageWithParameters({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _MessageWithParametersState createState() => _MessageWithParametersState();
+}
+
+class _MessageWithParametersState extends State<MessageWithParameters> {
+  String username = '';
+  double number = 0;
+  double sliderValue = 0;
+  @override
+  Widget build(BuildContext context) {
+    final chicken = AppLocalizations.of(context)?.chicken ?? "";
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)?.enterYourNameHere,
+            ),
+            onChanged: (val) => setState(() {
+              username = val;
+            }),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30),
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)?.enterAnyNumberHere,
+              ),
+              onChanged: (val) => setState(() {
+                number = double.tryParse(val) ?? 0;
+              }),
+            ),
+          ),
+          Text(
+            AppLocalizations.of(context)!.yourNameIs(username),
+            style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              AppLocalizations.of(context)!.userNumberIs(username, number),
+              style: TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Text(
+            AppLocalizations.of(context)!.todayTomorrow(
+              DateTime.now(),
+              DateTime.now().add(Duration(days: 1)),
+            ),
+            style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Slider(
+            value: sliderValue,
+            onChanged: (val) => setState(
+              () {
+                sliderValue = val;
+              },
+            ),
+            min: 0,
+            max: 10,
+            divisions: 10,
+            label: AppLocalizations.of(context)
+                    ?.nThings(sliderValue.toInt(), chicken) ??
+                "",
+          ),
+        ],
       ),
     );
   }
