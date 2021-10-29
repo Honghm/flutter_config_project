@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:template_flutter/view_models/notification/firebase_notification_handler.dart';
 import 'package:template_flutter/views/checkbox/multi_checkbox_screen.dart';
 import 'package:template_flutter/views/language/change_language.dart';
@@ -10,14 +10,15 @@ import 'package:template_flutter/views/pin_code/pin_code_dialog.dart';
 import 'package:template_flutter/views/pin_code/pin_code_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
 import 'package:template_flutter/views/radio%20group/radio_group_demo_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:template_flutter/views/theme/change_theme.dart';
+import 'package:template_flutter/views/verify_code/verify_code_screen.dart';
 
 import 'gallery_view/gallery_view_screen.dart';
 import 'image_slider/image_slider.dart';
 
 class HomeScreen extends StatefulWidget {
   static final id = '/home';
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -26,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   FirebaseNotification firebaseNotification = FirebaseNotification();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -115,23 +117,64 @@ class DemoCategory extends StatelessWidget {
             },
             child: Text("Change Theme")),
         ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, ChangeLanguage.id);
-            },
-            child: Text("Change Language")),
+          onPressed: () {
+            Navigator.pushNamed(context, ChangeLanguage.id);
+          },
+          child: Text(
+            "Change Language",
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (_) => VerifyCodeScreen(
+                  phoneNumber: "0123456789",
+                  onVerify: (val) async {
+                    await Future.delayed(Duration(seconds: 2));
+                    if (val == "123456") return true;
+                    return false;
+                  },
+                  onChanged: (val) {},
+                  autoVerify: true,
+                  // backgroundColor: Colors.red,
+                  // buttonPrimaryColor: Colors.blue,
+                  // buttonSecondaryColor: Colors.amber,
+                  // subtitle2LeftStyle: TextStyle(color: Colors.white),
+                  // subtitle1: "AAAA",
+                  // subtitle2RightStyle: TextStyle(color: Colors.white),
+                  // buttonTextStyle: TextStyle(color: Colors.red),
+                  // keyboardTextStyle:
+                  //     TextStyle(color: Colors.white, fontSize: 2342),
+                  // titleStyle: TextStyle(color: Colors.white),
+                  // pinTextStyle: TextStyle(color: Colors.white),
+                  // subtitle1Style: TextStyle(color: Colors.white),
+                  // title: "ASDASDAS",
+                  // subtitle2Left: "asdasd",
+                  // buttonBorderRadius: 2323,
+                  // subtitle2Right: "QWeqwdsadqw",
+                ),
+              ),
+            );
+          },
+          child: Text(
+            "Verify Code",
+          ),
+        ),
       ],
     );
   }
 
   Future _openPinCodeDialog(BuildContext context) async {
     await showDialog(
-        context: context,
-        builder: (context) => PinCodeDialog(
-              title: "Pickup confirmation",
-              subtitle: "(Oder ID: AA15)",
-              description:
-                  "Ask restaurant staff for TAC to complete your pickup",
-              pinCodeTextChanged: (val) {},
-            ));
+      context: context,
+      builder: (context) => PinCodeDialog(
+        title: "Pickup confirmation",
+        subtitle: "(Oder ID: AA15)",
+        description: "Ask restaurant staff for TAC to complete your pickup",
+        pinCodeTextChanged: (val) {},
+      ),
+    );
   }
 }

@@ -30,7 +30,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.0
   equatable: ^2.0.3
-
+  flutter_template:
+    git:
+      url: https://github.com/Honghm/flutter_template.git
   intl: ^0.17.0
   google_fonts: ^2.0.0
   dio: ^4.0.0
@@ -48,7 +50,6 @@ dependencies:
   geolocator: ^7.4.0
   progress_state_button: ^1.0.3
   carousel_slider: ^4.0.0
-  pin_code_fields: ^7.3.0
   camera: ^0.8.1+7
   flutter_bloc: ^7.2.0
 

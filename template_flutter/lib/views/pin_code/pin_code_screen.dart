@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:flutter_template/flutter_template.dart';
 
 class PinCodeScreen extends StatefulWidget {
   static final id = 'PinCodeScreen';
