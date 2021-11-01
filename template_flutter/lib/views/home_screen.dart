@@ -183,7 +183,10 @@ class DemoLogin extends StatelessWidget {
         ),
         subtitle: "Cross-Border Transactions. Simplified.",
         onForgotPasswordClicked: () {},
+        forgotPasswordText: "Forgot password?",
         rememberMeChanged: (bool value) {},
+        rememberMeText: "Remember me",
+
         // primaryColor: Colors.blue,
         // subtitleStyle: TextStyle(color: Colors.orange),
         // textFieldStyle:
@@ -199,45 +202,56 @@ class DemoLogin extends StatelessWidget {
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (_) => BlocProvider(
-                create: (context) => VerifyCodeBloc(),
-                child: VerifyCodeScreen(
-                  phoneNumber: "0123456789",
-                  onVerify: (val) async {
-                    await Future.delayed(Duration(seconds: 2));
-                    if (val == "123456") return true;
-                    return false;
-                  },
-                  onChanged: (val) {},
-                  autoVerify: true,
-                  //primaryColor: Colors.blue,
-                  // backgroundColor: Colors.red,
-                  // buttonPrimaryColor: Colors.blue,
-                  // buttonSecondaryColor: Colors.amber,
-                  // subtitle2LeftStyle: TextStyle(color: Colors.white),
-                  // subtitle1: "AAAA",
-                  // subtitle2RightStyle: TextStyle(color: Colors.white),
-                  // buttonTextStyle: TextStyle(color: Colors.red),
-                  // keyboardTextStyle:
-                  //     TextStyle(color: Colors.white, fontSize: 2342),
-                  // titleStyle: TextStyle(color: Colors.white),
-                  // pinTextStyle: TextStyle(color: Colors.white),
-                  // subtitle1Style: TextStyle(color: Colors.white),
-                  // title: "ASDASDAS",
-                  // subtitle2Left: "asdasd",
-                  // buttonBorderRadius: 2323,
-                  // subtitle2Right: "QWeqwdsadqw",
-                  subtitle2Left: "Don’t receive the OTP? ",
-                  subtitle2Right: "RESEND OTP",
-                  title: "6-digit code",
-                  subtitle1: "Please enter the code we’ve sent to ",
-                ),
-              ),
+              builder: (_) => DemoVerifyCodeScreen(),
             ),
           );
         },
         // buttonSuccessText: "AAAAAAAAAAAAAAA",
         // buttonSuccessColor: Colors.blue,
+      ),
+    );
+  }
+}
+
+class DemoVerifyCodeScreen extends StatelessWidget {
+  const DemoVerifyCodeScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => VerifyCodeBloc(),
+      child: VerifyCodeScreen(
+        phoneNumber: "0123456789",
+        onVerify: (val) async {
+          await Future.delayed(Duration(seconds: 2));
+          if (val == "123456") return true;
+          return false;
+        },
+        onChanged: (val) {},
+        autoVerify: true,
+        //primaryColor: Colors.blue,
+        // backgroundColor: Colors.red,
+        // buttonPrimaryColor: Colors.blue,
+        // buttonSecondaryColor: Colors.amber,
+        // subtitle2LeftStyle: TextStyle(color: Colors.white),
+        // subtitle1: "AAAA",
+        // subtitle2RightStyle: TextStyle(color: Colors.white),
+        // buttonTextStyle: TextStyle(color: Colors.red),
+        // keyboardTextStyle:
+        //     TextStyle(color: Colors.white, fontSize: 2342),
+        // titleStyle: TextStyle(color: Colors.white),
+        // pinTextStyle: TextStyle(color: Colors.white),
+        // subtitle1Style: TextStyle(color: Colors.white),
+        // title: "ASDASDAS",
+        // subtitle2Left: "asdasd",
+        // buttonBorderRadius: 2323,
+        // subtitle2Right: "QWeqwdsadqw",
+        subtitle2Left: "Don’t receive the OTP? ",
+        subtitle2Right: "RESEND OTP",
+        title: "6-digit code",
+        subtitle1: "Please enter the code we’ve sent to ",
       ),
     );
   }

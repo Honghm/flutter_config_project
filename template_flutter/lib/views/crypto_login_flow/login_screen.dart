@@ -13,13 +13,13 @@ typedef LoginCallback = Future<void> Function(String email, String password,
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
     Key? key,
-    required this.rememberMeChanged,
-    required this.onForgotPasswordClicked,
+    this.rememberMeChanged,
+    this.onForgotPasswordClicked,
     required this.onLoginClicked,
     this.primaryColor,
     this.backgroundColor,
-    required this.subtitle,
-    required this.logo,
+    this.subtitle,
+    this.logo,
     this.subtitleStyle,
     this.textFieldStyle,
     this.buttonIdleText,
@@ -32,16 +32,22 @@ class LoginScreen extends StatefulWidget {
     this.forgotPasswordText,
     this.rememberMeText,
     this.textFieldDecoration,
-  }) : super(key: key);
+  })  : assert((rememberMeChanged == null && rememberMeText == null) ||
+            (rememberMeChanged != null && rememberMeText != null)),
+        assert((forgotPasswordText == null &&
+                onForgotPasswordClicked == null) ||
+            (forgotPasswordText != null && onForgotPasswordClicked != null)),
+        assert(subtitle == null && subtitleStyle == null),
+        super(key: key);
 
-  final ValueChanged<bool> rememberMeChanged;
-  final GestureTapCallback onForgotPasswordClicked;
+  final ValueChanged<bool>? rememberMeChanged;
+  final GestureTapCallback? onForgotPasswordClicked;
   final LoginCallback onLoginClicked;
   final Color? primaryColor;
   final Color? backgroundColor;
-  final String subtitle;
+  final String? subtitle;
   final TextStyle? subtitleStyle;
-  final Widget logo;
+  final Widget? logo;
   final TextStyle? textFieldStyle;
   final String? buttonIdleText;
   final String? buttonErrorText;
@@ -53,6 +59,7 @@ class LoginScreen extends StatefulWidget {
   final String? forgotPasswordText;
   final String? rememberMeText;
   final InputDecoration? textFieldDecoration;
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -91,14 +98,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 98.h,
                   ),
-                  widget.logo,
+                  if (widget.logo != null) widget.logo!,
                   SizedBox(
                     height: 32.h,
                   ),
-                  Text(
-                    widget.subtitle,
-                    style: widget.subtitleStyle ?? TextConfigs.kText40Normal_2,
-                  ),
+                  if (widget.subtitle != null)
+                    Text(
+                      widget.subtitle!,
+                      style:
+                          widget.subtitleStyle ?? TextConfigs.kText40Normal_2,
+                    ),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -187,48 +196,50 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 70.h,
               ),
-              InkWell(
-                onTap: () {
-                  _bloc!.add(LoginRememberMeChanged(
-                      !_bloc!.state.rememberMe, widget.rememberMeChanged));
-                },
-                child: Container(
-                  height: 84.h,
-                  child: Row(
-                    children: [
-                      BlocSelector<LoginBloc, LoginState, bool>(
-                        selector: (state) => state.rememberMe,
-                        builder: (context, rememberMe) {
-                          return Container(
-                            height: 50.h,
-                            width: 50.h,
-                            decoration: BoxDecoration(
-                              color: rememberMe
-                                  ? widget.primaryColor ?? ColorConfigs.kColor4
-                                  : Colors.transparent,
-                              border: Border.all(
-                                  color: widget.primaryColor ??
-                                      ColorConfigs.kColor4),
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        width: 25.w,
-                      ),
-                      Flexible(
-                        child: Container(
-                            height: 84.h,
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              widget.rememberMeText ?? "Remember me",
-                              style: TextConfigs.kText40Normal_2,
-                            )),
-                      )
-                    ],
+              if (widget.rememberMeText != null)
+                InkWell(
+                  onTap: () {
+                    _bloc!.add(LoginRememberMeChanged(
+                        !_bloc!.state.rememberMe, widget.rememberMeChanged!));
+                  },
+                  child: Container(
+                    height: 84.h,
+                    child: Row(
+                      children: [
+                        BlocSelector<LoginBloc, LoginState, bool>(
+                          selector: (state) => state.rememberMe,
+                          builder: (context, rememberMe) {
+                            return Container(
+                              height: 50.h,
+                              width: 50.h,
+                              decoration: BoxDecoration(
+                                color: rememberMe
+                                    ? widget.primaryColor ??
+                                        ColorConfigs.kColor4
+                                    : Colors.transparent,
+                                border: Border.all(
+                                    color: widget.primaryColor ??
+                                        ColorConfigs.kColor4),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: 25.w,
+                        ),
+                        Flexible(
+                          child: Container(
+                              height: 84.h,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                widget.rememberMeText ?? "Remember me",
+                                style: TextConfigs.kText40Normal_2,
+                              )),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
               SizedBox(
                 height: 100.h,
               ),
@@ -279,20 +290,21 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 75.h,
               ),
-              Container(
-                alignment: Alignment.center,
-                child: InkWell(
-                  onTap: () {
-                    _bloc!.add(LoginForgotPasswordClicked(
-                        widget.onForgotPasswordClicked));
-                  },
-                  child: Text(
-                    widget.forgotPasswordText ?? "Forgot password?",
-                    style: TextConfigs.kText40Normal_4
-                        .copyWith(color: widget.primaryColor),
+              if (widget.forgotPasswordText != null)
+                Container(
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    onTap: () {
+                      _bloc!.add(LoginForgotPasswordClicked(
+                          widget.onForgotPasswordClicked!));
+                    },
+                    child: Text(
+                      widget.forgotPasswordText!,
+                      style: TextConfigs.kText40Normal_4
+                          .copyWith(color: widget.primaryColor),
+                    ),
                   ),
-                ),
-              )
+                )
             ],
           ),
         ),
