@@ -37,7 +37,7 @@ class LoginScreen extends StatefulWidget {
         assert((forgotPasswordText == null &&
                 onForgotPasswordClicked == null) ||
             (forgotPasswordText != null && onForgotPasswordClicked != null)),
-        assert(subtitle == null && subtitleStyle == null),
+        assert(subtitle == null && subtitleStyle == null || subtitle != null),
         super(key: key);
 
   final ValueChanged<bool>? rememberMeChanged;
