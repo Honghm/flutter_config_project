@@ -38,7 +38,7 @@ class LoginClicked extends LoginEvent {
 }
 
 class LoginForgotPasswordClicked extends LoginEvent {
-  final GestureTapCallback onForgotPasswordClicked;
+  final Future<bool?> Function() onForgotPasswordClicked;
   LoginForgotPasswordClicked(this.onForgotPasswordClicked);
   @override
   List<Object?> get props => [onForgotPasswordClicked];

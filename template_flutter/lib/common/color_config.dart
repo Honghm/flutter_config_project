@@ -8,5 +8,7 @@ class ColorConfigs {
   static const kColor5 = Color(0xFFFF0000);
   static const kColor6 = Color(0xFF01AB01);
   static const kColor7 = Color(0xFFCCCCCC);
-  static const kColor8= Color(0xFFBFBFBF);
+  static const kColor8 = Color(0xFFBFBFBF);
+  static const kColor9 = Color(0xFF333333);
+  static const kColor10 = Color(0xFF999999);
 }

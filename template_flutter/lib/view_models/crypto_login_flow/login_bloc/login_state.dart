@@ -7,6 +7,7 @@ class LoginState extends Equatable {
   final ButtonStatus buttonStatus;
   final String emailValidator;
   final String passwordValidator;
+  final bool isNotification;
   @override
   List<Object?> get props => [
         email,
@@ -15,6 +16,7 @@ class LoginState extends Equatable {
         buttonStatus,
         emailValidator,
         passwordValidator,
+        isNotification,
       ];
   factory LoginState.initial() => LoginState(
         email: '',
@@ -23,7 +25,9 @@ class LoginState extends Equatable {
         rememberMe: false,
         emailValidator: "",
         passwordValidator: "",
+        isNotification: false,
       );
+
 //<editor-fold desc="Data Methods">
 
   const LoginState({
@@ -33,28 +37,8 @@ class LoginState extends Equatable {
     required this.buttonStatus,
     required this.emailValidator,
     required this.passwordValidator,
+    required this.isNotification,
   });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is LoginState &&
-          runtimeType == other.runtimeType &&
-          email == other.email &&
-          password == other.password &&
-          rememberMe == other.rememberMe &&
-          buttonStatus == other.buttonStatus &&
-          emailValidator == other.emailValidator &&
-          passwordValidator == other.passwordValidator);
-
-  @override
-  int get hashCode =>
-      email.hashCode ^
-      password.hashCode ^
-      rememberMe.hashCode ^
-      buttonStatus.hashCode ^
-      emailValidator.hashCode ^
-      passwordValidator.hashCode;
 
   @override
   String toString() {
@@ -65,6 +49,7 @@ class LoginState extends Equatable {
         ' buttonStatus: $buttonStatus,' +
         ' emailValidator: $emailValidator,' +
         ' passwordValidator: $passwordValidator,' +
+        ' isNotification: $isNotification,' +
         '}';
   }
 
@@ -75,6 +60,7 @@ class LoginState extends Equatable {
     ButtonStatus? buttonStatus,
     String? emailValidator,
     String? passwordValidator,
+    bool? isNotification,
   }) {
     return LoginState(
       email: email ?? this.email,
@@ -83,6 +69,7 @@ class LoginState extends Equatable {
       buttonStatus: buttonStatus ?? this.buttonStatus,
       emailValidator: emailValidator ?? this.emailValidator,
       passwordValidator: passwordValidator ?? this.passwordValidator,
+      isNotification: isNotification ?? this.isNotification,
     );
   }
 
@@ -94,6 +81,7 @@ class LoginState extends Equatable {
       'buttonStatus': this.buttonStatus,
       'emailValidator': this.emailValidator,
       'passwordValidator': this.passwordValidator,
+      'isNotification': this.isNotification,
     };
   }
 
@@ -105,6 +93,7 @@ class LoginState extends Equatable {
       buttonStatus: map['buttonStatus'] as ButtonStatus,
       emailValidator: map['emailValidator'] as String,
       passwordValidator: map['passwordValidator'] as String,
+      isNotification: map['isNotification'] as bool,
     );
   }
 

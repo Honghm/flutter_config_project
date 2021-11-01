@@ -54,8 +54,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await Future.delayed(Duration(seconds: 2));
       emit(state.copyWith(buttonStatus: ButtonStatus.idle));
     });
-    on<LoginForgotPasswordClicked>((event, emit) {
-      event.onForgotPasswordClicked();
+    on<LoginForgotPasswordClicked>((event, emit) async {
+      final result = await event.onForgotPasswordClicked();
+      if (result != null && result == true) {
+        emit(state.copyWith(isNotification: true));
+        emit(state.copyWith(isNotification: false));
+      }
     });
   }
 }

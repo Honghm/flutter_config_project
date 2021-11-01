@@ -8,6 +8,7 @@ import 'package:template_flutter/view_models/crypto_login_flow/login_bloc/login_
 import 'package:template_flutter/view_models/crypto_login_flow/verify_code_bloc/verify_code_bloc.dart';
 import 'package:template_flutter/view_models/notification/firebase_notification_handler.dart';
 import 'package:template_flutter/views/checkbox/multi_checkbox_screen.dart';
+import 'package:template_flutter/views/crypto_login_flow/forgot_password_screen.dart';
 import 'package:template_flutter/views/crypto_login_flow/login_screen.dart';
 import 'package:template_flutter/views/language/change_language.dart';
 import 'package:template_flutter/views/map/map_screen.dart';
@@ -182,7 +183,35 @@ class DemoLogin extends StatelessWidget {
           ],
         ),
         subtitle: "Cross-Border Transactions. Simplified.",
-        onForgotPasswordClicked: () {},
+        onForgotPasswordClicked: () async {
+          return Navigator.push<bool>(
+            context,
+            CupertinoPageRoute(
+              builder: (_) => ForgotPasswordScreen(
+                onContinueClicked: (email) async {
+                  await Future.delayed(Duration(seconds: 2));
+                  if (email == "1@1")
+                    return true;
+                  else
+                    return false;
+                },
+                logo: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                        height: 86.h, width: 86.h, child: Icon(Icons.error)),
+                    Flexible(
+                        child: Text(
+                      "USDV",
+                      style: TextConfigs.kText60Bold_4,
+                    ))
+                  ],
+                ),
+                subtitle: "Cross-Border Transactions. Simplified.",
+              ),
+            ),
+          );
+        },
         forgotPasswordText: "Forgot password?",
         rememberMeChanged: (bool value) {},
         rememberMeText: "Remember me",

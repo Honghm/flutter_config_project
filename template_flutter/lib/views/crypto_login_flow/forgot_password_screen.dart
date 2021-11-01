@@ -2,9 +2,45 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_template/flutter_template.dart';
+import 'package:template_flutter/common/color_config.dart';
+import 'package:template_flutter/common/text_config.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+  ForgotPasswordScreen({
+    Key? key,
+    this.subtitle,
+    this.subtitleStyle,
+    this.logo,
+    this.backgroundColor,
+    this.backIcon,
+    this.buttonIdleText,
+    this.buttonErrorText,
+    this.buttonSuccessText,
+    this.buttonErrorColor,
+    this.buttonSuccessColor,
+    this.buttonTextStyle,
+    this.primaryColor,
+    this.emailMessage,
+    this.textFieldDecoration,
+    this.title,
+    required this.onContinueClicked,
+  }) : super(key: key);
+  final String? subtitle;
+  final TextStyle? subtitleStyle;
+  final Widget? logo;
+  final Color? backgroundColor;
+  final Widget? backIcon;
+  final String? buttonIdleText;
+  final String? buttonErrorText;
+  final String? buttonSuccessText;
+  final Color? buttonErrorColor;
+  final Color? buttonSuccessColor;
+  final TextStyle? buttonTextStyle;
+  final Color? primaryColor;
+  final Text? emailMessage;
+  final InputDecoration? textFieldDecoration;
+  final Text? title;
+  final Future<bool> Function(String email) onContinueClicked;
 
   @override
   _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
@@ -13,93 +49,129 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _email = TextEditingController();
 
+  TextStyle get buttonTextStyle =>
+      widget.buttonTextStyle ?? TextConfigs.kTextConfig;
+  final _formKey = GlobalKey<FormState>();
+
+  final RegExp emailReg = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color(0xFF333333),
+      backgroundColor: ColorConfigs.kColor1,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: widget.backgroundColor ?? ColorConfigs.kColor1,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: widget.backIcon ??
+              Icon(
+                Icons.arrow_back_ios,
+                color: ColorConfigs.kColor2,
+              ),
+        ),
+      ),
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.only(top: 122.h),
-          width: _size.width,
-          padding: EdgeInsets.symmetric(horizontal: 50.w),
-          decoration: BoxDecoration(
-              color: kycColor2,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(70.h),
-                topRight: Radius.circular(70.h),
-              )),
-          child: ListView(
-            children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(top: 56.h),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 100.w,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: kycColor3,
+        child: Padding(
+          padding: EdgeInsets.only(left: 50.w, right: 50.w, top: 100.h),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                if (widget.logo != null) widget.logo!,
+                SizedBox(
+                  height: 32.h,
+                ),
+                if (widget.subtitle != null)
+                  Text(
+                    widget.subtitle!,
+                    style: widget.subtitleStyle ?? TextConfigs.kText40Normal_2,
+                  ),
+                SizedBox(
+                  height: 56.h,
+                ),
+                widget.title ??
+                    Text(
+                      "Forgot your password?",
+                      style: TextConfigs.kText45Bold_9,
+                      textAlign: TextAlign.center,
                     ),
+                SizedBox(
+                  height: 52.h,
+                ),
+                TextFormField(
+                  controller: _email,
+                  style: TextConfigs.kText40Normal_2,
+                  cursorColor: ColorConfigs.kColor6,
+                  keyboardType: TextInputType.number,
+                  validator: (val) {
+                    if (val == null || emailReg.hasMatch(val)) return null;
+                    return "Invalid Email";
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: widget.textFieldDecoration ??
+                      InputDecoration(
+                        contentPadding: EdgeInsets.all(32.h),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: ColorConfigs.kColor6)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: ColorConfigs.kColor7)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: ColorConfigs.kColor5)),
+                        hintStyle: TextConfigs.kText40Normal_8,
+                        hintText: "Email",
+                      ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 52.h, bottom: 150.h),
+                  child: widget.emailMessage ??
+                      Text(
+                        "Enter the email address you used to sign in to Heineken to reset your password.",
+                        style: TextConfigs.kText30Normal_10,
+                      ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: ProgressButtonAnimation(
+                    height: 120.h,
+                    maxWidth: _size.width,
+                    state: stateOnlyText,
+                    onPressed: _listenStateButton,
+                    stateWidgets: {
+                      ButtonStatus.idle: Text(
+                        widget.buttonIdleText ?? "Continue",
+                        style: buttonTextStyle,
+                      ),
+                      ButtonStatus.fail: Text(
+                        widget.buttonErrorText ?? "Có lỗi xảy ra",
+                        style: buttonTextStyle,
+                      ),
+                      ButtonStatus.success: Text(
+                        widget.buttonSuccessText ?? "Continue",
+                        style: buttonTextStyle,
+                      ),
+                    },
+                    stateColors: {
+                      ButtonStatus.idle:
+                          widget.primaryColor ?? ColorConfigs.kColor4,
+                      ButtonStatus.loading:
+                          widget.primaryColor ?? ColorConfigs.kColor4,
+                      ButtonStatus.fail:
+                          widget.buttonErrorColor ?? ColorConfigs.kColor5,
+                      ButtonStatus.success:
+                          widget.buttonSuccessColor ?? ColorConfigs.kColor4,
+                    },
                   ),
                 ),
-              ),
-              headerBuild(),
-              Text(
-                "Forgot your password?",
-                style: kText45Bold_13,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 52.h,
-              ),
-              TextFormField(
-                controller: _email,
-                style: kText40Normal_3,
-                cursorColor: kycColor5,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(32.h),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: kycColor5)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: kycColor16)),
-                  hintStyle: kText40Normal_7,
-                  hintText: "Email",
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 52.h, bottom: 150.h),
-                child: Text(
-                  "Enter the email address you used to sign in to Heineken to reset your password.",
-                  style: kText30Normal_17,
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: ProgressButtonAnimation(
-                  height: 120.h,
-                  maxWidth: _size.width,
-                  state: stateOnlyText,
-                  onPressed: _listenStateButton,
-                  stateWidgets: {
-                    ButtonStatus.idle: Text("Continue", style: kTextConfig),
-                    ButtonStatus.fail:
-                        Text("Có lỗi xảy ra", style: kTextConfig),
-                    ButtonStatus.success: Text("Continue", style: kTextConfig),
-                  },
-                  stateColors: {
-                    ButtonStatus.idle: kycColor1,
-                    ButtonStatus.loading: kycColor1,
-                    ButtonStatus.fail: kycColor6,
-                    ButtonStatus.success: kycColor1,
-                  },
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -108,56 +180,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   ButtonStatus stateOnlyText = ButtonStatus.idle;
 
-  _listenStateButton() {
+  _listenStateButton() async {
+    if (!_formKey.currentState!.validate()) return;
+
     setState(() {
       stateOnlyText = ButtonStatus.loading;
     });
-    Future.delayed(Duration(seconds: 2), () {
+    if (await widget.onContinueClicked(_email.text)) {
+      setState(() {
+        stateOnlyText = ButtonStatus.success;
+      });
+      Navigator.pop(context, true);
+    } else {
+      setState(() {
+        stateOnlyText = ButtonStatus.fail;
+      });
+      await Future.delayed(Duration(seconds: 2));
       setState(() {
         stateOnlyText = ButtonStatus.idle;
       });
-
-      Navigator.pop(context);
-    });
+    }
   }
-}
-
-headerBuild() {
-  return Column(
-    children: [
-      SizedBox(
-        height: 42.h,
-      ),
-      Container(
-        height: 86.h,
-        width: 263.w,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-                height: 86.h,
-                width: 86.h,
-                child: SvgPicture.asset("assets/icons/ic_app.svg")),
-            Flexible(
-                child: Text(
-              "USDV",
-              style: kText60Bold_1,
-            ))
-          ],
-        ),
-      ),
-      SizedBox(
-        height: 30.h,
-      ),
-      Container(
-        child: Text(
-          "Cross-Border Transactions. Simplified.",
-          style: kText40Normal_3,
-        ),
-      ),
-      SizedBox(
-        height: 67.h,
-      ),
-    ],
-  );
 }
