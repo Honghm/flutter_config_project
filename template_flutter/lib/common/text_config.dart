@@ -25,8 +25,26 @@ class TextConfigs {
     fontSize: ScreenUtil().setSp(40),
     color: ColorConfigs.kColor4,
   );
+  static final kText40Normal_5 = kTextConfig.copyWith(
+    fontSize: ScreenUtil().setSp(40),
+    color: ColorConfigs.kColor5,
+  );
+  static final kText40Normal_7 = kTextConfig.copyWith(
+    fontSize: ScreenUtil().setSp(40),
+    color: ColorConfigs.kColor7,
+  );
+  static final kText40Normal_8 = kTextConfig.copyWith(
+    fontSize: ScreenUtil().setSp(40),
+    color: ColorConfigs.kColor8,
+  );
   static final kText72Bold_2 = kTextConfig.copyWith(
     fontSize: ScreenUtil().setSp(72),
     color: ColorConfigs.kColor2,
+    fontWeight: FontWeight.bold,
+  );
+  static final kText60Bold_4 = kTextConfig.copyWith(
+    fontSize: ScreenUtil().setSp(60),
+    fontWeight: FontWeight.bold,
+    color: ColorConfigs.kColor4,
   );
 }

@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:template_flutter/common/text_config.dart';
+import 'package:template_flutter/view_models/crypto_login_flow/login_bloc/login_bloc.dart';
+import 'package:template_flutter/view_models/crypto_login_flow/verify_code_bloc/verify_code_bloc.dart';
 import 'package:template_flutter/view_models/notification/firebase_notification_handler.dart';
 import 'package:template_flutter/views/checkbox/multi_checkbox_screen.dart';
+import 'package:template_flutter/views/crypto_login_flow/login_screen.dart';
 import 'package:template_flutter/views/language/change_language.dart';
 import 'package:template_flutter/views/map/map_screen.dart';
 import 'package:template_flutter/views/notification/notification_screen.dart';
@@ -11,8 +17,8 @@ import 'package:template_flutter/views/pin_code/pin_code_screen.dart';
 import 'package:template_flutter/views/progress_state_button/progress_state_button.dart';
 import 'package:template_flutter/views/radio%20group/radio_group_demo_screen.dart';
 import 'package:template_flutter/views/theme/change_theme.dart';
-import 'package:template_flutter/views/verify_code/verify_code_screen.dart';
 
+import 'crypto_login_flow/verify_code_screen.dart';
 import 'gallery_view/gallery_view_screen.dart';
 import 'image_slider/image_slider.dart';
 
@@ -129,7 +135,73 @@ class DemoCategory extends StatelessWidget {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (_) => VerifyCodeScreen(
+                builder: (_) => DemoLogin(),
+              ),
+            );
+          },
+          child: Text(
+            "Login",
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future _openPinCodeDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) => PinCodeDialog(
+        title: "Pickup confirmation",
+        subtitle: "(Oder ID: AA15)",
+        description: "Ask restaurant staff for TAC to complete your pickup",
+        pinCodeTextChanged: (val) {},
+      ),
+    );
+  }
+}
+
+class DemoLogin extends StatelessWidget {
+  const DemoLogin({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginBloc(),
+      child: LoginScreen(
+        logo: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(height: 86.h, width: 86.h, child: Icon(Icons.error)),
+            Flexible(
+                child: Text(
+              "USDV",
+              style: TextConfigs.kText60Bold_4,
+            ))
+          ],
+        ),
+        subtitle: "Cross-Border Transactions. Simplified.",
+        onForgotPasswordClicked: () {},
+        rememberMeChanged: (bool value) {},
+        // primaryColor: Colors.blue,
+        // subtitleStyle: TextStyle(color: Colors.orange),
+        // textFieldStyle:
+        //     TextStyle(fontSize: 20, color: Colors.lightBlueAccent),
+        onLoginClicked: (
+          String email,
+          String password,
+          void Function() onSuccess,
+          void Function() onFailed,
+        ) async {
+          await Future.delayed(Duration(seconds: 2));
+          onSuccess();
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (_) => BlocProvider(
+                create: (context) => VerifyCodeBloc(),
+                child: VerifyCodeScreen(
                   phoneNumber: "0123456789",
                   onVerify: (val) async {
                     await Future.delayed(Duration(seconds: 2));
@@ -138,6 +210,7 @@ class DemoCategory extends StatelessWidget {
                   },
                   onChanged: (val) {},
                   autoVerify: true,
+                  //primaryColor: Colors.blue,
                   // backgroundColor: Colors.red,
                   // buttonPrimaryColor: Colors.blue,
                   // buttonSecondaryColor: Colors.amber,
@@ -154,26 +227,17 @@ class DemoCategory extends StatelessWidget {
                   // subtitle2Left: "asdasd",
                   // buttonBorderRadius: 2323,
                   // subtitle2Right: "QWeqwdsadqw",
+                  subtitle2Left: "Don’t receive the OTP? ",
+                  subtitle2Right: "RESEND OTP",
+                  title: "6-digit code",
+                  subtitle1: "Please enter the code we’ve sent to ",
                 ),
               ),
-            );
-          },
-          child: Text(
-            "Verify Code",
-          ),
-        ),
-      ],
-    );
-  }
-
-  Future _openPinCodeDialog(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (context) => PinCodeDialog(
-        title: "Pickup confirmation",
-        subtitle: "(Oder ID: AA15)",
-        description: "Ask restaurant staff for TAC to complete your pickup",
-        pinCodeTextChanged: (val) {},
+            ),
+          );
+        },
+        // buttonSuccessText: "AAAAAAAAAAAAAAA",
+        // buttonSuccessColor: Colors.blue,
       ),
     );
   }

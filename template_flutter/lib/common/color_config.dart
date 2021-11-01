@@ -6,4 +6,7 @@ class ColorConfigs {
   static const kColor3 = Color(0xFF888888);
   static const kColor4 = Color(0xFF009F6C);
   static const kColor5 = Color(0xFFFF0000);
+  static const kColor6 = Color(0xFF01AB01);
+  static const kColor7 = Color(0xFFCCCCCC);
+  static const kColor8= Color(0xFFBFBFBF);
 }
